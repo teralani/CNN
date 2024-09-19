@@ -9,5 +9,4 @@ class Softmax(Layer):
     
     def backward(self, output_gradient, learning_rate):
         n = np.size(self.output)
-        tmp = np.tile(self.output, n)
-        return np.dot(tmp * (np.identity(n) - np.transpose(tmp)), output_gradient)
+        return np.dot((np.identity(n) - self.output.T) * self.output, output_gradient)

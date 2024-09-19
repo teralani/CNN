@@ -53,7 +53,7 @@ train(
     x_train,
     y_train,
     epochs,
-    learning_rate = 0.01
+    learning_rate = 0.1
 )
 percent_error = 0
 counter = 0
@@ -62,5 +62,7 @@ for x, y in zip(x_test, y_test):
     percent_error += 1 if(np.argmax(output) == np.argmax(y)) else 0
     counter += 1
     print(f"pred: {np.argmax(output)}, true: {np.argmax(y)}")
-print(f"{round(percent_error/counter * 100, 0)}% correct")
+print(f"{round(percent_error/len(y_test) * 100, 0)}% correct")
+
+
 

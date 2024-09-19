@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNN</title>
+    <!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css"> -->
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
+</head>
+<style>
+    body {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+
+    }
+    canvas {
+        border: 1px solid black;
+        height: 70vh;
+        width: 70vh;
+        align-self: center;
+        justify-self: center;
+        object-fit: fill;
+        
+    }
+</style>
+<body>
+    <h1>Draw a digit</h1>
+    <canvas id="canvas" width="28" height="28"></canvas>
+    <button onclick="submit()" style=" width: fit-content; align-self: center; margin-top: 2vh;">Submit</button>
+    <py-script> 
+        from mnist
+    </py-script>
+</body>
+<script>
+    var c = document.querySelectorAll("#canvas")[0];
+    console.log(c);
+    // var c = document.createElement("canvas");
+    // document.body.appendChild(c);
+    // c.width = 28;
+    // c.height = 28;
+
+
+    var pos = {x: 0, y: 0};
+    var ctx = c.getContext("2d");
+    // resize();
+    c.addEventListener("mousemove", draw);
+    c.addEventListener("mousedown", setPosition);
+    c.addEventListener("mouseenter", setPosition);
+
+    function setPosition(e) {
+        console.log((window.innerWidth *0.7 / c.width)/2);
+
+        pos.x = (e.clientX - c.offsetLeft) / (window.innerWidth *0.7 / c.width)*2;
+        pos.y = (e.clientY- c.offsetTop) / (window.innerWidth *0.7 / c.width)*2;
+    }
+
+    function draw(e) {
+        if(e.buttons !== 1) return;
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#000000";
+
+        ctx.moveTo(pos.x, pos.y);
+        setPosition(e);
+        ctx.lineTo(pos.x, pos.y);
+
+        ctx.stroke();
+    }
+    // var imageData = ctx.createImageData(28, 28);
+    var imageData;
+    function submit() {
+        imageData = ctx.getImageData(0,0,28,28).data;
+        console.log(imageData);
+    }
+</script>
+</html>
